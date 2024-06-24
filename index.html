@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
     <link rel='stylesheet' href='style.css'>
     <script src='main.js' type='module' defer></script>
@@ -11,21 +12,22 @@
 <body>
 
 <div class='container'>
+    <span class='title'>Progress</span>
     <div class='progress-bar'></div>
     <div class='progress-states'>
         <div class='state value'>
             <input id='progress-value' type='number' value='0' placeholder='0'>
-            <label for='progress-value'>Value</label>
+            <label for='progress-value' class='text-input'>Value</label>
         </div>
         <div class='state animate'>
             <input id='switch-animate' type='checkbox'>
             <label for='switch-animate' class='switch'></label>
-            <span>Animate</span>
+            <span class='text-input'>Animate</span>
         </div>
         <div class='state hide'>
             <input id='switch-hide' type='checkbox' >
             <label for='switch-hide' class='switch'></label>
-            <span>Hide</span>
+            <span class='text-input'>Hide</span>
         </div>
     </div>
 </div>

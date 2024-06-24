@@ -10,7 +10,7 @@ const progressStartValue = 0,
 let animateFunc;
 
 const setProgress = (value) => {
-    progressBar.style.background = `conic-gradient(#6ca1fc ${value * 3.6}deg, #ededed 0deg)`;
+    progressBar.style.background = `conic-gradient(var(--dark-blue) ${value * 3.6}deg, var(--progress-bar) 0deg)`;
 }
 
 progressValue.addEventListener('input', () => {
@@ -38,6 +38,7 @@ isAnimate.addEventListener('click', () => {
     } else {
         clearInterval(animateFunc);
         setProgress(progressStartValue);
+        progressValue.value = progressStartValue;
     }
 });
 
