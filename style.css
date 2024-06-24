@@ -19,7 +19,7 @@
     position: relative;
     width: 600px;
     height: 320px;
-    margin: 200px auto;
+    margin: 50px auto;
     background-color: var(--white);
 
     display: flex;
@@ -126,7 +126,6 @@ input[type="number"]::-webkit-outer-spin-button {
     .container {
         height: 600px;
         width: 320px;
-        margin: 50px auto;
         display: flex;
         flex-direction: column;
         align-items: center;
