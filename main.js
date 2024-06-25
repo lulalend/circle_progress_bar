@@ -5,7 +5,7 @@ let progressBar = document.querySelector('.progress-bar'),
 
 const progressStartValue = 0,
     progressEndValue = 100,
-    speed = 100;
+    speed = 30;
 
 let animateFunc;
 
