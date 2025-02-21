@@ -73,5 +73,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.querySelector('input[type="number"]').addEventListener('input', function(e) {
-    e.target.value = e.target.value.replace(/^0+(?=\d)/g, "");  // Прощайте, лишние символы!
+    e.target.value = e.target.value.replace(/^0+(?=\d)/g, "");
 });
