@@ -16,8 +16,8 @@
     <div class='progress-bar'></div>
     <div class='progress-states'>
         <div class='state value'>
-            <input id='progress-value' type='number' value='0' placeholder='0'
-                   onkeyup='this.value = this.value.replace(/[^\d-+]/g,"")'>
+            <input id='progress-value' type='number' placeholder='0'
+                   onkeyup='this.value = this.value.replace(/^0+(?=\d)/, "")'>
             <label for='progress-value' class='text-input'>Value</label>
         </div>
         <div class='state animate'>
