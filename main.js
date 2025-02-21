@@ -7,11 +7,24 @@ const progressStartValue = 0,
     progressEndValue = 100,
     speed = 30;
 
-let animateFunc;
+let animateFunc, rotationAngle = 0, stopAnimationFunc;
 
 const setProgress = (value) => {
-    progressBar.style.background = `conic-gradient(var(--dark-blue) ${value * 3.6}deg, var(--progress-bar) 0deg)`;
-}
+    let progressAngle = value * 3.6;
+    progressBar.style.background = `conic-gradient(var(--dark-blue) ${progressAngle}deg, var(--progress-bar) 0deg)`;
+};
+
+
+const stopAnimation = () => {
+    stopAnimationFunc = setInterval(() => {
+        rotationAngle += 5;
+        progressBar.style.transform = `rotate(${rotationAngle}deg)`;
+
+        if (rotationAngle % 360 === 0) {
+            clearInterval(stopAnimationFunc);
+        }
+    }, speed);
+};
 
 progressValue.addEventListener('input', () => {
     if (progressValue.value >= progressStartValue && progressValue.value <= progressEndValue)
@@ -22,23 +35,16 @@ progressValue.addEventListener('input', () => {
     }
 });
 
+
 isAnimate.addEventListener('click', () => {
     if (isAnimate.checked) {
-        let currentProgress = progressStartValue;
-
         animateFunc = setInterval(() => {
-            currentProgress++;
-
-            if (currentProgress > progressEndValue)
-                currentProgress = progressStartValue;
-
-            progressValue.value = currentProgress;
-            setProgress(currentProgress);
+            rotationAngle += 5;
+            progressBar.style.transform = `rotate(${rotationAngle}deg)`;
         }, speed);
     } else {
         clearInterval(animateFunc);
-        setProgress(progressStartValue);
-        progressValue.value = progressStartValue;
+        stopAnimation();
     }
 });
 
