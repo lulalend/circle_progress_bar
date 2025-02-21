@@ -1,61 +1,73 @@
-let progressBar = document.querySelector('.progress-bar'),
-    progressValue = document.querySelector('#progress-value'),
-    isAnimate = document.querySelector('#switch-animate'),
-    isHide = document.querySelector('#switch-hide');
+class ProgressBar {
+    constructor(
+      progressBarSelector,
+      progressValueSelector,
+      animateSwitchSelector,
+      hideSwitchSelector,
+      speed = 30
+    ) {
+        this.progressBar = document.querySelector(progressBarSelector);
+        this.progressValue = document.querySelector(progressValueSelector);
+        this.isAnimate = document.querySelector(animateSwitchSelector);
+        this.isHide = document.querySelector(hideSwitchSelector);
+        this.speed = speed;
 
-const progressStartValue = 0,
-    progressEndValue = 100,
-    speed = 30;
+        this.progressStartValue = 0;
+        this.progressEndValue = 100;
+        this.rotationAngle = 0;
+        this.animateFunc = null;
 
-let animateFunc, rotationAngle = 0, stopAnimationFunc;
+        this.initEventListeners();
+    }
 
-const setProgress = (value) => {
-    let progressAngle = value * 3.6;
-    progressBar.style.background = `conic-gradient(var(--dark-blue) ${progressAngle}deg, var(--progress-bar) 0deg)`;
-};
+    setProgress(value) {
+        let progressAngle = value * 3.6;
+        this.progressBar.style.background = `conic-gradient(var(--dark-blue) ${progressAngle}deg, var(--progress-bar) 0deg)`;
+    }
 
+    rotateProgress(angle) {
+        this.rotationAngle += angle;
+        this.progressBar.style.transform = `rotate(${this.rotationAngle}deg)`;
+    }
 
-const stopAnimation = () => {
-    stopAnimationFunc = setInterval(() => {
-        rotationAngle += 5;
-        progressBar.style.transform = `rotate(${rotationAngle}deg)`;
-
-        if (rotationAngle % 360 === 0) {
-            clearInterval(stopAnimationFunc);
+    handleProgressInput() {
+        if (
+          this.progressValue.value >= this.progressStartValue
+          && this.progressValue.value <= this.progressEndValue
+        )
+            this.setProgress(this.progressValue.value);
+        else {
+            this.setProgress(this.progressStartValue);
+            this.progressValue.value = this.progressStartValue;
         }
-    }, speed);
-};
-
-progressValue.addEventListener('input', () => {
-    if (progressValue.value >= progressStartValue && progressValue.value <= progressEndValue)
-        setProgress(progressValue.value);
-    else {
-        setProgress(progressStartValue);
-        progressValue.value = progressStartValue;
     }
-});
 
-
-isAnimate.addEventListener('click', () => {
-    if (isAnimate.checked) {
-        animateFunc = setInterval(() => {
-            rotationAngle += 5;
-            progressBar.style.transform = `rotate(${rotationAngle}deg)`;
-        }, speed);
-    } else {
-        clearInterval(animateFunc);
-        stopAnimation();
+    toggleAnimation() {
+        if (this.isAnimate.checked) {
+            this.animateFunc = setInterval(() => this.rotateProgress(5), this.speed);
+        } else {
+            clearInterval(this.animateFunc);
+            this.rotationAngle = 0;
+            this.progressBar.style.transform = `rotate(0deg)`;
+        }
     }
+
+    toggleVisibility() {
+        this.progressBar.classList.toggle('hidden', this.isHide.checked);
+    }
+
+    initEventListeners() {
+        this.progressValue.addEventListener('input', () => this.handleProgressInput());
+        this.isAnimate.addEventListener('click', () => this.toggleAnimation());
+        this.isHide.addEventListener('click', () => this.toggleVisibility());
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const progress = new ProgressBar(
+      '.progress-bar',
+      '#progress-value',
+      '#switch-animate',
+      '#switch-hide'
+    );
 });
-
-isHide.addEventListener('click', () => {
-    if (isHide.checked)
-        progressBar.classList.add('hidden');
-    else
-        progressBar.classList.remove('hidden');
-});
-
-
-
-
-
